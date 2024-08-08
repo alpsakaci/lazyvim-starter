@@ -1,5 +1,4 @@
 return {
-  -- DAP
   {
     "mfussenegger/nvim-dap",
     recommended = true,
@@ -124,8 +123,6 @@ return {
     -- mason-nvim-dap is loaded when nvim-dap loads
     config = function() end,
   },
-
-  -- GOLANG
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "go", "gomod", "gowork", "gosum" } },
