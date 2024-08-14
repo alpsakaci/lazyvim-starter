@@ -37,6 +37,10 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
+      local lspconfig = require("lspconfig")
+      lspconfig.pyright.setup({
+        filetypes = { "python" },
+      })
       local servers = { "pyright", "basedpyright", "ruff", "ruff_lsp", ruff, lsp }
       for _, server in ipairs(servers) do
         opts.servers[server] = opts.servers[server] or {}
@@ -128,6 +132,28 @@ return {
     opts = {
       handlers = {
         python = function() end,
+      },
+    },
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      opts.sources = vim.list_extend(opts.sources or {}, {
+        nls.builtins.formatting.black,
+        nls.builtins.diagnostics.ruff,
+      })
+    end,
+    ft = { "python" },
+  },
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "black",
+        "ruff",
+        "mypy",
+        "pyright",
       },
     },
   },
