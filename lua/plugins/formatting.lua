@@ -6,6 +6,7 @@ return {
         lua = { "stylua" },
         python = { "isort", "black" },
         go = { "gofumpt", "goimports" },
+        php = { "php_cs_fixer" },
       },
       formatters = {
         injected = { options = { ignore_errors = true } },

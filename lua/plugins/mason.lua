@@ -15,6 +15,10 @@ return {
         "gofumpt",
         "goimports",
         "delve",
+        -- PHP
+        "intelephense",
+        "php-debug-adapter",
+        "php-cs-fixer",
         -- Common tools
         "stylua",
         "shfmt",

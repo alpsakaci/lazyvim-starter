@@ -1,28 +1,42 @@
 return {
-  -- Completely disable Neo-tree
+  -- Disable Neo-tree completely (Snacks Explorer is the single file explorer)
   { "nvim-neo-tree/neo-tree.nvim", enabled = false },
 
-  -- Enable Snacks Explorer as the ONLY file explorer with hidden files visible
+  -- Enable Snacks Explorer & Picker with full hidden directory search
   {
     "folke/snacks.nvim",
     opts = {
       explorer = {
         enabled = true,
         hidden = true,
-        ignored = false,
+        ignored = true,
       },
       picker = {
         hidden = true,
+        ignored = true,
         sources = {
-          files = { hidden = true },
-          grep = { hidden = true },
-          explorer = { hidden = true, ignored = false },
+          files = {
+            hidden = true,
+            ignored = true,
+            cmd = "rg",
+            args = { "--files", "--hidden", "--glob", "!.git/*" },
+          },
+          grep = {
+            hidden = true,
+            ignored = true,
+            cmd = "rg",
+            args = { "--hidden", "--glob", "!.git/*" },
+          },
+          explorer = {
+            hidden = true,
+            ignored = true,
+          },
         },
       },
     },
   },
 
-  -- Telescope: Enable hidden files in search
+  -- Telescope: Enable hidden files & directories in find_files and live_grep
   {
     "nvim-telescope/telescope.nvim",
     opts = {
@@ -36,27 +50,35 @@ return {
           "--column",
           "--smart-case",
           "--hidden",
+          "--glob",
+          "!.git/*",
         },
       },
       pickers = {
         find_files = {
           hidden = true,
+          no_ignore = true,
+          find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
         },
         live_grep = {
           additional_args = function()
-            return { "--hidden" }
+            return { "--hidden", "--glob", "!.git/*" }
           end,
         },
       },
     },
   },
 
-  -- Fzf-lua: Enable hidden files in search
+  -- Fzf-lua: Enable hidden files & directories in search
   {
     "ibhagwan/fzf-lua",
     opts = {
-      files = { hidden = true },
-      grep = { hidden = true },
+      files = {
+        cmd = "rg --files --hidden --glob '!.git/*'",
+      },
+      grep = {
+        rg_opts = "--hidden --glob '!.git/*'",
+      },
     },
   },
 }

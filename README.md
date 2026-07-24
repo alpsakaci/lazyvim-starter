@@ -1,6 +1,6 @@
-# 💤 LazyVim IDE Configuration (Python & Go)
+# 💤 LazyVim IDE Configuration (Python, Go & PHP)
 
-Personal Neovim configuration built on top of [LazyVim](https://github.com/LazyVim/LazyVim) transformed into a full-featured IDE for Python and Golang development.
+Personal Neovim configuration built on top of [LazyVim](https://github.com/LazyVim/LazyVim) transformed into a full-featured IDE for Python, Golang, and PHP development with `.vscode/launch.json` DAP debugging support.
 
 ---
 
@@ -14,6 +14,13 @@ Personal Neovim configuration built on top of [LazyVim](https://github.com/LazyV
   - **LSP / Linter**: `gopls` + `golangci-lint`
   - **Formatting**: `gofumpt` + `goimports`
   - **Debugger (DAP)**: `delve` (`dlv`) + `nvim-dap-go` + `nvim-dap-ui`
+- 🐘 **PHP IDE**:
+  - **LSP / Linter**: `intelephense` + `phpcs`
+  - **Formatting**: `php-cs-fixer`
+  - **Debugger (DAP)**: `Xdebug` (`php-debug-adapter` on ports 9003 & 9000)
+- 🚀 **`.vscode/launch.json` Support**:
+  - Automatically loads and runs launch configurations from `.vscode/launch.json` for PHP, Python, and Go!
+  - Reload launch configs manually with `<leader>dl`.
 - 📁 **File Explorer**:
   - `Snacks Explorer` configured as the single, primary file explorer (`<leader>e`).
   - Hidden dotfiles (`.env`, `.gitignore`, `.neoconf.json` etc.) displayed by default.
@@ -32,6 +39,7 @@ Before installing, ensure the following tools are installed on your machine:
 - **Git**
 - **Python 3** & `pip3`
 - **Go** (`v1.20+`)
+- **PHP** & **Xdebug** (for PHP debugging)
 - **ripgrep** (`brew install ripgrep` on macOS or `apt install ripgrep` on Linux)
 - C Compiler (`clang`, `gcc`, `make` for tree-sitter builds)
 
@@ -60,21 +68,6 @@ When Neovim launches, `mason.nvim` will automatically download LSPs, formatters,
 :Mason
 ```
 
-### Step 4: (Optional) Install CLI Binaries Globally
-If you also want these formatters and debuggers available directly in your terminal outside Neovim:
-
-**Python Tools:**
-```bash
-pip3 install --user --break-system-packages debugpy black ruff isort
-```
-
-**Go Tools:**
-```bash
-go install mvdan.cc/gofumpt@latest
-go install github.com/go-delve/delve/cmd/dlv@latest
-go install golang.org/x/tools/cmd/goimports@latest
-```
-
 ---
 
 ## ⌨️ Keybindings Cheat Sheet
@@ -89,6 +82,7 @@ go install golang.org/x/tools/cmd/goimports@latest
 | `<leader>db` | Toggle Breakpoint |
 | `<leader>dB` | Set Conditional Breakpoint |
 | `<leader>du` | Toggle DAP UI |
+| `<leader>dl` | Reload `.vscode/launch.json` |
 
 ### Explorer & Navigation
 | Shortcut | Action |
