@@ -39,6 +39,18 @@ return {
         return expand_workspace_vars(config, root)
       end
 
+      -- Delve varsayılan olarak outputMode="local" kullanır: debug edilen programın
+      -- stdout/stderr'i dlv'nin kendi (detached) terminaline gider ve hiçbir yerde
+      -- görünmez. "remote" ile delve çıktıyı DAP output event'i olarak gönderir,
+      -- böylece loglar dap-ui'ın REPL panelinde akar.
+      -- .vscode/launch.json'dan gelen konfiglerde bu alan olmadığı için burada set ediyoruz.
+      dap.listeners.on_config["go_output_mode"] = function(config)
+        if config.type == "go" and config.request == "launch" and config.outputMode == nil then
+          config = vim.tbl_extend("force", config, { outputMode = "remote" })
+        end
+        return config
+      end
+
       -- PHP Xdebug Adapter Configuration (Correct Mason VSCode extension path)
       local mason_path = vim.fn.stdpath("data") .. "/mason/packages/php-debug-adapter"
       local php_debug_js = mason_path .. "/extension/out/phpDebug.js"
